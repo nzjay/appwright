@@ -1,5 +1,4 @@
 define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/demand.tpl'], function (_, Backbone, Handlebars, util, template_source) {
-  console.log('init...');
   function isImporter(player) {
     return player.color == 'black';
   }
@@ -47,8 +46,12 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/demand.tp
     },
 
     render: function () {
-      console.log('demand:render');
       $(this.el).html(this.template(this));
+    },
+
+    subnav: function () {
+      var base = '#' + this._good;
+      return [{ url: base+'/appeal', name: 'appeal' }, { url: base+'/demand', name: 'demand' }];
     },
 
     good: function () {
@@ -112,7 +115,7 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/demand.tp
           width: width,
           appeal: p.industry[good].appeal,
           capacity: p.industry[good].capacity,
-          share: distribution[p.color],
+          share: distribution[p.color] || 0,
           demand_track: view._demand_track(ranges[p.color].max, distribution[p.color])
         });
 

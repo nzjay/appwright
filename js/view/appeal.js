@@ -1,6 +1,4 @@
 define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/appeal.tpl'], function (_, Backbone, Handlebars, util, template_source) {
-  console.log('init...');
-
   var AppealView = Backbone.View.extend({
     template: null,
     _players: null,
@@ -18,7 +16,6 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/appeal.tp
     },
 
     render: function () {
-      console.log('appeal:render');
       $(this.el).html(this.template(this));
     },
 
@@ -32,9 +29,12 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/appeal.tp
         , value = $target.val()
         , player = this.getPlayer($track.data('player'));
 
-      console.log(this._good+':appeal:change:'+$track.data('player')+'='+value+' ('+$target.attr('id')+')');
-
       player.setAppeal(this._good, value);
+    },
+
+    subnav: function () {
+      var base = '#' + this._good;
+      return [{ url: base+'/appeal', name: 'appeal' }, { url: base+'/demand', name: 'demand' }];
     },
 
     good: function () {
@@ -50,8 +50,9 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/appeal.tp
         
         var track = [];
 
-        for (var i = 0; i < 20; i++) {
-          track.push({ n: i + 1, selected: p.industry[good].appeal === i });
+        for (var i = 0; i <= 20; i++) {
+          var cell = { n: i, selected: p.industry[good].appeal === i };
+          track.push(cell);
         }
 
         out.push({ width: width, name: p.color, color: p.color, appeal_track: track });

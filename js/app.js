@@ -26,11 +26,10 @@ require.config({
 });
 
 require(['jquery', 'underscore', 'backbone', 'handlebars', 'bootstrap', 'model/player', 'view/appeal', 'view/demand'], function ($, _, Backbone, Handlebars, Bootstrap, PlayerModel, AppealView, DemandView) {
-  console.log('init...');
-
   var pages = $('#pages')
     , colors = ['red', 'blue', 'green', 'yellow']
     , players = []
+    , views = { 'demand': {}, 'appeal': {} }
     , goods = ['bread', 'clothes', 'cutlery', 'lamps']
     , goods_data = $.map(goods, function (g) {
         return { name: g[0].toUpperCase() + (g.length > 1 ? g.slice(1) : ''), link_name: g };
@@ -73,25 +72,15 @@ require(['jquery', 'underscore', 'backbone', 'handlebars', 'bootstrap', 'model/p
     var demand_page = $('<li class="page">').attr('id', demand_id).html(layout)
       , demand_view = new DemandView({ el: demand_page.find('.content'), good: good, players: players });
 
+    views.appeal[good] = appeal_view;
+    views.demand[good] = demand_view;
+
     appeal_view.render();
     demand_view.render();
 
     pages.append(appeal_page);
     pages.append(demand_page);
   });
-
-  /*$('#pages li').not('#loading').each(function (i, e) {
-    var $el = $(e)
-      , name = $(e).attr('id');
-
-    $el.html(layout);
-
-    var $content = $el.find('.content')
-      , view = new pages[name]({ el: $content });
-
-    view.render();
-
-  });*/
 
   function show(page) {
     $('#pages > li').removeClass('active')
@@ -107,16 +96,13 @@ require(['jquery', 'underscore', 'backbone', 'handlebars', 'bootstrap', 'model/p
     },
 
     index: function () {
-      console.log("index:display");
     },
 
     appeal: function (good) {
-      console.log("appeal:display:"+good);
       show("#appeal_" + good);
     },
 
     demand: function (good) {
-      console.log("demand:display"+good);
       show('#demand_' + good);
     }
   });
@@ -125,8 +111,9 @@ require(['jquery', 'underscore', 'backbone', 'handlebars', 'bootstrap', 'model/p
   $.each(players, function (i, p) {
     $.each(goods, function (j, g) {
       var name = g+':appeal';
+
       p.on(name, function (event) {
-        console.log(p.color + ' set their ' + g + ' to ' + event.value);
+        views.demand[g].render();
       });
     });
   });

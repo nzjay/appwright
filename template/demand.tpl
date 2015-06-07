@@ -1,4 +1,9 @@
 <h1>{{good}}: Demand</h1>
+<ul class="subnav">
+{{#subnav}}
+  <li><a href="{{url}}" {{#if current}}class="current"{{/if}}>{{ name }}</a></li>
+{{/subnav}}
+</ul>
 <p>Maximum domestic demand: {{domestic_demand}}</p>
 <h2>Order</h2>
 <ul>
