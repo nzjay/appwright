@@ -1,4 +1,4 @@
-define(['underscore', 'backbone', 'handlebars', 'text!template/appeal.tpl'], function (_, Backbone, Handlebars, template_source) {
+define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/appeal.tpl'], function (_, Backbone, Handlebars, util, template_source) {
   console.log('init...');
 
   var AppealView = Backbone.View.extend({
@@ -38,22 +38,23 @@ define(['underscore', 'backbone', 'handlebars', 'text!template/appeal.tpl'], fun
     },
 
     good: function () {
-      return this._good[0].toUpperCase() + this._good.slice(1);
+      return util.ucfirst(this._good);
     },
 
     players: function () {
       var out = []
-        , width = 12 / this._players.length; // fancy that: 12 divides evenly by 2,3,4
+        , width = 12 / this._players.length
+        , good = this._good;
 
-      $.each(this._players, function (i, e) {
+      $.each(this._players, function (i, p) {
         
         var track = [];
 
         for (var i = 0; i < 20; i++) {
-          track.push({ n: i + 1 });
+          track.push({ n: i + 1, selected: p.industry[good].appeal === i });
         }
 
-        out.push({ width: width, name: e.color, color: e.color, appeal_track: track });
+        out.push({ width: width, name: p.color, color: p.color, appeal_track: track });
 
       });
 

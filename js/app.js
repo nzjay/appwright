@@ -40,10 +40,18 @@ require(['jquery', 'underscore', 'backbone', 'handlebars', 'bootstrap', 'model/p
     players: players
   };
 
+  var fixtures = {
+    appeal: [ 10, 15, 13, 6 ],
+    capacity: [ 7, 6, 2, 7 ]
+  };
+
   // Game data setup
   $.each(colors, function (i, color) {
 
     var p = PlayerModel(color);
+
+    p.industry.bread.appeal = fixtures.appeal.pop();
+    p.industry.bread.capacity = fixtures.capacity.pop();
 
     players.push(p);
 
@@ -117,7 +125,6 @@ require(['jquery', 'underscore', 'backbone', 'handlebars', 'bootstrap', 'model/p
   $.each(players, function (i, p) {
     $.each(goods, function (j, g) {
       var name = g+':appeal';
-      console.log('hook up event: '+p.color+', '+name);
       p.on(name, function (event) {
         console.log(p.color + ' set their ' + g + ' to ' + event.value);
       });
