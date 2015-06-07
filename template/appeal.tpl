@@ -8,10 +8,16 @@
 <div class="row">
 {{#players}}
   <div class="col-xs-{{width}}">
-    <h4 class="player_{{color}}">player: {{name}}</h4>
+    <h4 class="player_{{color}} player">{{name}}</h4>
     <ul class="appeal_track {{color}}" data-player="{{color}}">
 {{#appeal_track}}
-      <li><label for="{{id}}">{{n}}</label><input type="radio" name="{{ name }}" id="{{id}}" value="{{n}}" {{#if selected}}checked="checked"{{/if}}/></li>
+      <li>
+        <input type="radio" name="{{ name }}" id="{{id}}" value="{{n}}" {{#if selected}}checked="checked"{{/if}}/>
+        <div class="info">
+          <label for="{{id}}">{{n}}</label>
+          <span class="fa fa-lg fa-square cube player_{{../color}}"></span>
+        </div>
+      </li>
 {{/appeal_track}}
     </ul>
   </div>

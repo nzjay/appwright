@@ -8,6 +8,17 @@ ul#pages li.page.active { display: list-item; }
 .player_yellow { color: yellow; }
 .player_black { color: black; }
 
+.demand_track { margin: 0; padding: 0; list-style-type: none; }
 .demand_track .cube { color: #572510; }
 .demand_track .regret { color: #d7d7d7; }
-.demand_track { margin: 0; padding: 0; list-style-type: none; }
+
+.appeal_track { margin: 0; padding: 0; list-style-type: none; }
+.appeal_track label { text-align: left; position: absolute; left: 4px; top: 2px; width: 100%; z-index: 1; }
+.appeal_track input[type=radio] { position: absolute; width: 100%; height: 100%; left: 10px; top: 0px; opacity: 0; }
+.appeal_track input[type=radio]:checked + .info label { color: black }
+.appeal_track.black input[type=radio]:checked + .info label { color: white }
+.appeal_track.blue input[type=radio]:checked + .info label { color: white }
+.appeal_track input[type=radio]:checked + .info .cube { visibility: visible; }
+.appeal_track li { position: relative; color: #aaa; font-size: 18px; margin-bottom: 10px; height: 30px; }
+.appeal_track .cube { visibility: hidden; }
+
