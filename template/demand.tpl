@@ -31,7 +31,13 @@
 {{#if importer}}
     <p class='importer'>Importer</p>
 {{else}}
-    <p>Capacity: <input class="capacity" type="number" data-player="{{ color }}" data-industry="{{ industry }}" name="{{color}}_capacity" value="{{capacity}}" /></p>
+    <p>Capacity:
+      <select class="capacity" data-player="{{ color }}" data-industry="{{ industry }}" name="{{color}}_capacity">
+      {{#capacity}}
+        <option value="{{value}}" {{#if selected}}selected="selected"{{/if}}>{{ value }}</option>
+      {{/capacity}}
+      </select>
+    </p>
 {{/if}}
     <p>Share: {{share}}</p>
     <ul class="demand_track {{color}}" data-player="{{color}}">

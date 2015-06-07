@@ -3,8 +3,8 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/demand.tp
   var DOMESTIC_INITIAL = 10
     , DOMESTIC_MAX = 20
     , INITIAL_DOMESTIC = { 'bread': 10, 'clothes': 9, 'cutlery': 8, 'lamps': 7 }
-    , MAX_DOMESTIC = {'bread': 20, 'clothes': 19, 'cutlery': 18, 'lamps': 17 };
-
+    , MAX_DOMESTIC = {'bread': 20, 'clothes': 19, 'cutlery': 18, 'lamps': 17 }
+    , CAPACITY_MAX = 25; // max production (bread? 2+3+3+2?) + max storage (10 warehouse + 5 small warehouse) = ~25ish. no one will ever sell this many anyway... the maximum demand track is 20
 
   function isImporter(player) {
     return player.color == 'black';
@@ -171,7 +171,7 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/demand.tp
           importer: isImporter(p),
           width: width,
           appeal: p.industry[good].appeal,
-          capacity: p.industry[good].capacity,
+          capacity: view._capacity_range(p.industry[good].capacity),
           share: distribution[p.color] || 0,
           demand_track: view._demand_track(start, count, earliest_start, latest_finish)
         });
@@ -181,6 +181,16 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/demand.tp
       out[out.length-1].width += gap;
 
       return out;
+    },
+
+    _capacity_range: function (capacity) {
+      var range = [];
+
+      for (var i = 0; i < CAPACITY_MAX; i++) {
+        range.push({ selected: i == capacity, value: i });
+      }
+
+      return range;
     },
 
     _demand_track: function (start, count, track_start, track_end) {
