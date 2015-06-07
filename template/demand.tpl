@@ -40,6 +40,12 @@
     </p>
 {{/if}}
     <p>Share: {{share}}</p>
+  </div>
+{{/players}}
+</div>
+<div class="row">
+{{#players}}
+  <div class="col-xs-{{width}}">
     <ul class="demand_track {{color}}" data-player="{{color}}">
 {{#demand_track}}
 {{#if taken}}
@@ -51,4 +57,5 @@
     </ul>
   </div>
 {{/players}}
+  </div>
 </div>
