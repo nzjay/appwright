@@ -15,15 +15,16 @@
     </ul>
 
     <script id="layout" type="text/template">
-<h1>Navigation</h1>
-<ul id="nav">
+<div class="container">
+<div class="btn-group nav" role="group" aria-label="Industry">
 {{# goods }}
-  <li><a href='#{{ link_name }}/appeal'>{{ name }}</a></li>
+  <a role="button" class="btn btn-default" href='#{{ link_name }}/appeal' data-industry="{{link_name}}">{{ name }}</a>
 {{/ goods }}
-</ul>
+</div>
 <div class='content'></div>
 <div class='footer'>
   <p>fin</p>
+</div>
 </div>
     </script>
   </body>

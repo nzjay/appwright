@@ -1,9 +1,9 @@
 <h1>{{good}}</h1>
-<ul class="subnav">
+<div class="subnav btn-group">
 {{#subnav}}
-  <li><a href="{{url}}" {{#if current}}class="current"{{/if}}>{{ name }}</a></li>
+  <a href="{{url}}" role="button" class="btn btn-default {{#if current}}active{{/if}}">{{ name }}</a>
 {{/subnav}}
-</ul>
+</div>
 <h2>Appeal</h2>
 <div class="row">
 {{#players}}

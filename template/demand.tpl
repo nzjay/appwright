@@ -1,24 +1,28 @@
 <h1>{{good}}</h1>
-<ul class="subnav">
+<div class="subnav btn-group">
 {{#subnav}}
-  <li><a href="{{url}}" {{#if current}}class="current"{{/if}}>{{ name }}</a></li>
+  <a href="{{url}}" role="button" class="btn btn-default {{#if current}}active{{/if}}">{{ name }}</a>
 {{/subnav}}
-</ul>
+</div>
 <h2>Demand</h2>
-<p>
-  Maximum domestic demand: 
 {{#domestic}}
-  <select class='domestic' name="{{name}}">
+<form class="form">
+<div class="form-group">
+  <label class="control-label">Maximum domestic demand</label>
+  <div class="">
+    <select class='domestic form-control' name="{{name}}">
 {{#range}}
-    <option value="{{ value }}" {{#if selected}}selected="selected"{{/if}}>{{ value }}</option>
+      <option value="{{ value }}" {{#if selected}}selected="selected"{{/if}}>{{ value }}</option>
 {{/range}}
-  </select>
+    </select>
+  </div>
+</div>
+</form>
 {{/domestic}}
-</p>
 <h3>Order</h3>
-<ul>
+<ul class="player_order">
 {{#order}}
-  <li class="player_{{ color }}">{{ color }}</li>
+  <li><span class="who player_{{ color }}">{{ color }}</span><span class="fa fa-arrow-right"></span></li>
 {{/order}}
 </ul>
 
@@ -26,7 +30,7 @@
 <div class="row">
 {{#players}}
   <div class="col-xs-{{width}}">
-    <h4 class="player_{{color}}">player: {{name}}</h4>
+    <h4 class="player_{{color}}">{{color}}</h4>
     <p>Appeal: {{appeal}}</p>
 {{#if importer}}
     <p class='importer'>Importer</p>

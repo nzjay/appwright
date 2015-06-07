@@ -4,8 +4,10 @@ body { background-color: #f8f8f8; font-family: 'Open Sans','Helvetica','Arial',s
 #loading .message { display: none; }
 
 ul#pages { margin: 0; padding: 0; list-style-type: none; }
-ul#pages li.page { display: none; }
+ul#pages li.page { display: none; padding-top: 10px; }
 ul#pages li.page.active { display: list-item; }
+
+.footer { color: #dadada; margin-top: 20px; border-top: 1px solid #dadada; }
 
 .player_red { color: red; }
 .player_blue { color: blue; }
@@ -13,12 +15,22 @@ ul#pages li.page.active { display: list-item; }
 .player_yellow { color: yellow; }
 .player_black { color: black; }
 
+.player_order { margin: 0; padding: 0; color: #dadada; }
+.player_order li { display: inline-block; margin-right: 10px; line-height: 55px; }
+.player_order li .who { padding: 10px; margin-right: 10px; border-radius: 5px; font-weight: bold;}
+.player_order li:last-child .fa { display: none; }
+.player_order .player_red { color: #f8f8f8; background-color: #b63939; border-bottom: 3px solid #922b2b; }
+.player_order .player_yellow { color: #080808; background-color: #f0f06e; border-bottom: 3px solid #d5d559; }
+.player_order .player_black { color: #f8f8f8; background-color: #393939; border-bottom: 3px solid #1d1d1d; }
+.player_order .player_blue { color: #f8f8f8; background-color: #1150ae; border-bottom: 3px solid #0a387d; }
+.player_order .player_green { color: #f8f8f8; background-color: #26a226; border-bottom: 3px solid #228022; }
+
 .demand_track { margin: 0; padding: 0; list-style-type: none; }
 .demand_track .cube { color: #572510; }
-.demand_track .regret { color: #d7d7d7; }
+.demand_track .regret { color: #dadada; }
 
 .appeal_track { margin: 0; padding: 0; list-style-type: none; }
-.appeal_track label { text-align: left; position: absolute; left: 4px; top: 2px; width: 100%; z-index: 1; }
+.appeal_track label { text-align: left; position: absolute; width: 100%; font-weight:normal; }
 .appeal_track input[type=radio] { position: absolute; width: 100%; height: 100%; left: 10px; top: 0px; opacity: 0; }
 .appeal_track input[type=radio]:checked + .info label { color: transparent; }
 .appeal_track input[type=radio]:checked + .info .cube { visibility: visible; }

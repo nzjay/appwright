@@ -34,7 +34,7 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/appeal.tp
 
     subnav: function () {
       var base = '#' + this._good;
-      return [{ url: base+'/appeal', name: 'appeal' }, { url: base+'/demand', name: 'demand' }];
+      return [{ url: base+'/appeal', name: 'Appeal', current: true }, { url: base+'/demand', name: 'Demand' }];
     },
 
     good: function () {

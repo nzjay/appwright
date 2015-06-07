@@ -89,9 +89,13 @@ require(['jquery', 'underscore', 'backbone', 'handlebars', 'bootstrap', 'model/p
     pages.append(demand_page);
   });
 
-  function show(page) {
+  function show(page, industry) {
     $('#pages > li').removeClass('active')
       .filter(page)
+      .addClass('active');
+
+    $('#pages > li .btn-group.nav .btn').removeClass('active')
+      .filter(function (i, e) { return $(e).data('industry') == industry; })
       .addClass('active');
   }
 
@@ -106,11 +110,12 @@ require(['jquery', 'underscore', 'backbone', 'handlebars', 'bootstrap', 'model/p
     },
 
     appeal: function (good) {
-      show("#appeal_" + good);
+
+      show("#appeal_" + good, good);
     },
 
     demand: function (good) {
-      show('#demand_' + good);
+      show('#demand_' + good, good);
     }
   });
 

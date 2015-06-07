@@ -81,7 +81,7 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/demand.tp
 
     subnav: function () {
       var base = '#' + this._good;
-      return [{ url: base+'/appeal', name: 'appeal' }, { url: base+'/demand', name: 'demand' }];
+      return [{ url: base+'/appeal', name: 'Appeal' }, { url: base+'/demand', name: 'Demand', current: true }];
     },
 
     domestic: function () {
