@@ -5,11 +5,20 @@
 {{/subnav}}
 </ul>
 <h2>Demand</h2>
-<p>Maximum domestic demand: {{domestic_demand}}</p>
+<p>
+  Maximum domestic demand: 
+{{#domestic}}
+  <select class='domestic' name="{{name}}">
+{{#range}}
+    <option value="{{ value }}" {{#if selected}}selected="selected"{{/if}}>{{ value }}</option>
+{{/range}}
+  </select>
+{{/domestic}}
+</p>
 <h3>Order</h3>
 <ul>
 {{#order}}
-  <li class='player_{{ color }}'>{{ color }}</li>
+  <li class="player_{{ color }}">{{ color }}</li>
 {{/order}}
 </ul>
 
@@ -24,9 +33,9 @@
     <ul class="demand_track {{color}}" data-player="{{color}}">
 {{#demand_track}}
 {{#if taken}}
-      <li>taken</li>
+      <li class='cube'><span class='fa fa-lg fa-square'></span></li>
 {{else}}
-      <li>free</li>
+      <li class='regret'><span class='fa fa-lg fa-circle-thin'></span></li>
 {{/if}}
 {{/demand_track}}
     </ul>

@@ -1,4 +1,11 @@
 define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/demand.tpl'], function (_, Backbone, Handlebars, util, template_source) {
+
+  var DOMESTIC_INITIAL = 10
+    , DOMESTIC_MAX = 20
+    , INITIAL_DOMESTIC = { 'bread': 10, 'clothes': 9, 'cutlery': 8, 'lamps': 7 }
+    , MAX_DOMESTIC = {'bread': 20, 'clothes': 19, 'cutlery': 18, 'lamps': 17 };
+
+
   function isImporter(player) {
     return player.color == 'black';
   }
@@ -12,10 +19,10 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/demand.tp
 
   function appealOrdering(good) {
     return function (p1, p2) {
-      p1Appeal = p1.industry[good].appeal;
-      p2Appeal = p2.industry[good].appeal;
+      p1_appeal = p1.industry[good].appeal;
+      p2_appeal = p2.industry[good].appeal;
 
-      if (p1Appeal === p2Appeal) {
+      if (p1_appeal === p2_appeal) {
         // importer always comes last in a tie
         if (isImporter(p1)) {
           return 1;
@@ -28,7 +35,7 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/demand.tp
       }
 
       // highest appeal comes first
-      return p1Appeal > p2Appeal ? -1 : 1;
+      return p1_appeal > p2_appeal ? -1 : 1;
     };
   }
 
@@ -37,12 +44,24 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/demand.tp
     _good: 'unknown',
     ordering: null,
 
+    events: {
+      'change .domestic': 'changeDomestic',
+    },
+
     initialize: function (opts) {
       this.template = Handlebars.compile(template_source);
       this._good = opts.good || 'unknown';
       this._players = opts.players || [];
-      this.domestic_demand = 20;
+      this.domestic_demand = opts.domestic || INITIAL_DOMESTIC[opts.good] || DOMESTIC_INITIAL;
       this.ordering = appealOrdering(opts.good);
+    },
+
+    changeDomestic: function (event) {
+      var $target = $(event.target);
+
+      this.domestic_demand = $target.val();
+
+      this.render();
     },
 
     render: function () {
@@ -54,6 +73,21 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/demand.tp
       return [{ url: base+'/appeal', name: 'appeal' }, { url: base+'/demand', name: 'demand' }];
     },
 
+    domestic: function () {
+      var max = MAX_DOMESTIC[this._good] || DOMESTIC_MAX
+        , out = {
+        name: 'domestic_' + this._good,
+        value: this.domestic_demand,
+        range: []
+      };
+
+      for (var i = 1; i < max; i++) {
+        out.range.push({ value: i, selected: out.value == i });
+      }
+
+      return out;
+    },
+
     good: function () {
       return util.ucfirst(this._good);
     },
@@ -63,11 +97,7 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/demand.tp
     },
 
     getOrderedPlayers: function () {
-      var importer = getImporter(this._good, 6)
-        , players = [importer].concat(this._players)
-        , order = players.sort(this.ordering);
-
-      return order;
+      return this._players.sort(this.ordering);
     },
 
     players: function () {
@@ -83,9 +113,11 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/demand.tp
 
       $.each(players, function (i, p) {
         var appeal = p.industry[good].appeal
-          , capacity = p.industry[good].capacity;
+          , capacity = p.industry[good].capacity
+          , max = Math.min(appeal, domestic_demand);
 
-        ranges[p.color] = { max: appeal, min: Math.max(appeal - capacity, 0) };
+        distribution[p.color] = 0;
+        ranges[p.color] = { max: max, min: Math.max(max - capacity, 0) };
       });
 
       var used = 0;
@@ -103,20 +135,32 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/demand.tp
           if (inRange && demandAvailable) {
             used++;
 
-            distribution[p.color] = (distribution[p.color] || 0) + 1
+            distribution[p.color] += 1;
           }
 
         });
       }
 
+      // of the players that received demand, who starts the earliest/finishes the latest?
+      var participating = _.pick(ranges, function (r, i) { return distribution[i] > 0; })
+        , starts = _.map(participating, function (r) { return r.max; })
+        , ends = _.map(participating, function (r, i) { return r.max - distribution[i] })
+        , earliest_start = Math.max.apply(null, starts.concat([0]))
+        , latest_finish = Math.min.apply(null, ends.concat(this.domestic_demand));
+
+      // fill in the player's demand share data
       $.each(players, function (i, p) {
+        var start = ranges[p.color].max
+          , count = distribution[p.color]
+          , diff = earliest_start - start;
+
         out.push({
           color: p.color,
           width: width,
           appeal: p.industry[good].appeal,
           capacity: p.industry[good].capacity,
           share: distribution[p.color] || 0,
-          demand_track: view._demand_track(ranges[p.color].max, distribution[p.color])
+          demand_track: view._demand_track(start, count, earliest_start, latest_finish)
         });
 
       });
@@ -126,11 +170,11 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/demand.tp
       return out;
     },
 
-    _demand_track: function (start, count) {
+    _demand_track: function (start, count, track_start, track_end) {
       var track = []
         , end = start - count;
 
-      for (var i = this.domestic_demand; i > 0; i--) {
+      for (var i = track_start; i > track_end; i--) {
         var cell = { taken: false };
 
         if (start >= i && end < i) {
