@@ -1,7 +1,9 @@
-body { background-color: #f8f8f8; font-family: 'Open Sans','Helvetica','Arial',sans-serif; }
+body { background-color: #fafafa; font-family: 'Open Sans','Helvetica','Arial',sans-serif; }
 
 #loading { color: #999; font-size: 300%; text-align: center; margin-top: 100px; }
 #loading .message { display: none; }
+
+h1,h2,h3,h4,h5,h6 { font-weight: 300; }
 
 ul#pages { margin: 0; padding: 0; list-style-type: none; }
 ul#pages li.page { display: none; padding-top: 10px; }
@@ -30,7 +32,7 @@ ul#pages li.page.active { display: list-item; }
 .demand_track .regret { color: #dadada; }
 
 .appeal_track { margin: 0; padding: 0; list-style-type: none; }
-.appeal_track label { text-align: left; position: absolute; width: 100%; font-weight:normal; }
+.appeal_track label { text-align: left; position: absolute; width: 100%; font-weight: 300; }
 .appeal_track input[type=radio] { position: absolute; width: 100%; height: 100%; left: 10px; top: 0px; opacity: 0; }
 .appeal_track input[type=radio]:checked + .info label { color: transparent; }
 .appeal_track input[type=radio]:checked + .info .cube { visibility: visible; }
