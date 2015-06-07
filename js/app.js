@@ -127,4 +127,8 @@ require(['jquery', 'underscore', 'backbone', 'handlebars', 'bootstrap', 'model/p
 
   var router = new Router;
   Backbone.history.start();
+
+  if (! window.location.hash) {
+    window.location.hash = 'bread/appeal';
+  }
 });

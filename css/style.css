@@ -1,3 +1,8 @@
+body { background-color: #f8f8f8; font-family: 'Open Sans','Helvetica','Arial',sans-serif; }
+
+#loading { color: #999; font-size: 300%; text-align: center; margin-top: 100px; }
+#loading .message { display: none; }
+
 ul#pages { margin: 0; padding: 0; list-style-type: none; }
 ul#pages li.page { display: none; }
 ul#pages li.page.active { display: list-item; }

@@ -5,16 +5,17 @@
     <script data-main="js/app.js" src="js/vendor/requirejs/require.js"></script>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"></script>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></script>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans"></script>
     <link rel="stylesheet" href="css/style.css"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
     <ul id="pages">
-      <li id="loading" class="page active"><p>loading</p><a href='#bread/demand'>demand</a><a href='#bread/appeal'>appeal</a></li>
+      <li id="loading" class="page active"><span class="fa fa-lg fa-spin fa-cog"></span><span class="message">loading</span></li>
     </ul>
 
     <script id="layout" type="text/template">
-<h1>navigation</h1>
+<h1>Navigation</h1>
 <ul id="nav">
 {{# goods }}
   <li><a href='#{{ link_name }}/appeal'>{{ name }}</a></li>
