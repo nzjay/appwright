@@ -19,8 +19,8 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/demand.tp
 
   function appealOrdering(good) {
     return function (p1, p2) {
-      p1_appeal = p1.industry[good].appeal;
-      p2_appeal = p2.industry[good].appeal;
+      var p1_appeal = Number(p1.industry[good].appeal);
+      var p2_appeal = Number(p2.industry[good].appeal);
 
       if (p1_appeal === p2_appeal) {
         // importer always comes last in a tie

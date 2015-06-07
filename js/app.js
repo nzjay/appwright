@@ -41,16 +41,23 @@ require(['jquery', 'underscore', 'backbone', 'handlebars', 'bootstrap', 'model/p
 
   var data = {
     blue: {
-      bread: { appeal: 13, capacity: 2 }
+      bread: { appeal: 13, capacity: 2 },
+      clothes: { appeal: 0, capacity: 2 }
     },
     red: {
-      bread: { appeal: 10, capacity: 7 }
+      bread: { appeal: 10, capacity: 7 },
+      clothes: { appeal: 12, capacity: 2 }
     },
     green: {
-      bread: { appeal: 15, capacity: 6 }
+      bread: { appeal: 15, capacity: 6 },
+      clothes: { appeal: 1, capacity: 2 }
     },
     yellow: {
-      bread: { appeal: 6, capacity: 7 }
+      bread: { appeal: 6, capacity: 7 },
+      clothes: { appeal: 14, capacity: 2 }
+    },
+    black: {
+      clothes: { appeal: 3 }
     }
   };
 
