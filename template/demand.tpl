@@ -28,7 +28,11 @@
   <div class="col-xs-{{width}}">
     <h4 class="player_{{color}}">player: {{name}}</h4>
     <p>Appeal: {{appeal}}</p>
-    <p>Capacity: {{capacity}}</p>
+{{#if importer}}
+    <p class='importer'>Importer</p>
+{{else}}
+    <p>Capacity: <input class="capacity" type="number" data-player="{{ color }}" data-industry="{{ industry }}" name="{{color}}_capacity" value="{{capacity}}" /></p>
+{{/if}}
     <p>Share: {{share}}</p>
     <ul class="demand_track {{color}}" data-player="{{color}}">
 {{#demand_track}}

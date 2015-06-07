@@ -20,7 +20,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
     initialize: function (opts) {
 
-      var industry = {};
+      var industry = {}
+        , that = this;
 
       this.color = opts.color;
 
@@ -28,7 +29,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
       $.each(goods, function (i, g) {
         var def = {
           appeal: 0,
-          capacity: isImporter(this) ? Number.POSITIVE_INFINITY : 0
+          capacity: isImporter(that) ? Number.POSITIVE_INFINITY : 0
         };
 
         industry[g] = def;
@@ -36,7 +37,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
       // Pre-load appeal levels
       $.each(opts.data, function (i, d) {
-        console.log('restore saved data '+i+', d='+JSON.stringify(d));
+        console.log(opts.color+' restore saved data '+i+', d='+JSON.stringify(d));
         industry[i].appeal = d.appeal;
         industry[i].capacity = d.capacity;
       });

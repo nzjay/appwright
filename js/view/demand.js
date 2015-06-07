@@ -46,6 +46,7 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/demand.tp
 
     events: {
       'change .domestic': 'changeDomestic',
+      'change .capacity': 'changeCapacity',
     },
 
     initialize: function (opts) {
@@ -60,6 +61,16 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/demand.tp
       var $target = $(event.target);
 
       this.domestic_demand = $target.val();
+
+      this.render();
+    },
+
+    changeCapacity: function (event) {
+      var $target = $(event.target)
+        , target_industry = $target.data('industry')
+        , target_player = _.find(this._players, function (p) { return p.color == $target.data('player') });
+
+      target_player.industry[target_industry].capacity = $target.val();
 
       this.render();
     },
@@ -156,6 +167,8 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/demand.tp
 
         out.push({
           color: p.color,
+          industry: good,
+          importer: isImporter(p),
           width: width,
           appeal: p.industry[good].appeal,
           capacity: p.industry[good].capacity,
