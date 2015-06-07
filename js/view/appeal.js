@@ -43,7 +43,8 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/appeal.tp
 
     players: function () {
       var out = []
-        , width = 12 / this._players.length
+        , width = Math.floor(12 / this._players.length)
+        , gap = 12 % this._players.length
         , good = this._good;
 
       $.each(this._players, function (i, p) {
@@ -51,13 +52,21 @@ define(['underscore', 'backbone', 'handlebars', 'util', 'text!template/appeal.tp
         var track = [];
 
         for (var i = 0; i <= 20; i++) {
-          var cell = { n: i, selected: p.industry[good].appeal === i };
+          var cell = {
+            n: i,
+            selected: p.industry[good].appeal === i,
+            id: good + '_' + p.color + '_appeal_' + i,
+            name: 'appeal['+good+']['+p.color+']'
+          };
+
           track.push(cell);
         }
 
         out.push({ width: width, name: p.color, color: p.color, appeal_track: track });
 
       });
+
+      out[out.length-1].width += gap;
 
       return out;
     },

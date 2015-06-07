@@ -1,18 +1,19 @@
-<h1>{{good}}: Demand</h1>
+<h1>{{good}}</h1>
 <ul class="subnav">
 {{#subnav}}
   <li><a href="{{url}}" {{#if current}}class="current"{{/if}}>{{ name }}</a></li>
 {{/subnav}}
 </ul>
+<h2>Demand</h2>
 <p>Maximum domestic demand: {{domestic_demand}}</p>
-<h2>Order</h2>
+<h3>Order</h3>
 <ul>
 {{#order}}
   <li class='player_{{ color }}'>{{ color }}</li>
 {{/order}}
 </ul>
 
-<h2>Distribution</h2>
+<h3>Distribution</h3>
 <div class="row">
 {{#players}}
   <div class="col-xs-{{width}}">

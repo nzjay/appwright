@@ -27,7 +27,7 @@ require.config({
 
 require(['jquery', 'underscore', 'backbone', 'handlebars', 'bootstrap', 'model/player', 'view/appeal', 'view/demand'], function ($, _, Backbone, Handlebars, Bootstrap, PlayerModel, AppealView, DemandView) {
   var pages = $('#pages')
-    , colors = ['red', 'blue', 'green', 'yellow']
+    , colors = ['black', 'red', 'blue', 'green', 'yellow']
     , players = []
     , views = { 'demand': {}, 'appeal': {} }
     , goods = ['bread', 'clothes', 'cutlery', 'lamps']
@@ -39,18 +39,25 @@ require(['jquery', 'underscore', 'backbone', 'handlebars', 'bootstrap', 'model/p
     players: players
   };
 
-  var fixtures = {
-    appeal: [ 10, 15, 13, 6 ],
-    capacity: [ 7, 6, 2, 7 ]
+  var data = {
+    blue: {
+      bread: { appeal: 13, capacity: 2 }
+    },
+    red: {
+      bread: { appeal: 10, capacity: 7 }
+    },
+    green: {
+      bread: { appeal: 15, capacity: 6 }
+    },
+    yellow: {
+      bread: { appeal: 6, capacity: 7 }
+    }
   };
 
   // Game data setup
   $.each(colors, function (i, color) {
 
-    var p = PlayerModel(color);
-
-    p.industry.bread.appeal = fixtures.appeal.pop();
-    p.industry.bread.capacity = fixtures.capacity.pop();
+    var p = PlayerModel(color, data[color]);
 
     players.push(p);
 

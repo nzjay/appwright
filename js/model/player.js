@@ -6,9 +6,13 @@
 // each of the four goods.
 //
 // exports: factory method for creating Player model objects
-define(['underscore', 'backbone'], function (_, Backbone) {
+define(['jquery', 'backbone'], function ($, Backbone) {
 
   var goods = [ 'bread', 'clothes', 'cutlery', 'lamps' ];
+
+  function isImporter(p) {
+    return p.color === 'black';
+  }
 
   var PlayerModel = Backbone.Model.extend({
     cool: 'beans',
@@ -18,16 +22,25 @@ define(['underscore', 'backbone'], function (_, Backbone) {
 
       var industry = {};
 
+      this.color = opts.color;
+
+      // Set default appeal levels
       $.each(goods, function (i, g) {
         var def = {
           appeal: 0,
-          capacity: 0
+          capacity: isImporter(this) ? Number.POSITIVE_INFINITY : 0
         };
 
         industry[g] = def;
       });
 
-      this.color = opts.color;
+      // Pre-load appeal levels
+      $.each(opts.data, function (i, d) {
+        console.log('restore saved data '+i+', d='+JSON.stringify(d));
+        industry[i].appeal = d.appeal;
+        industry[i].capacity = d.capacity;
+      });
+
       this.industry = industry;
     },
 
@@ -51,8 +64,8 @@ define(['underscore', 'backbone'], function (_, Backbone) {
     }
   });
 
-  var factory = function (color) {
-    var model = new PlayerModel({ color: color }); // Object.create(proto);
+  var factory = function (color, data) {
+    var model = new PlayerModel({ color: color, data: data || {} }); // Object.create(proto);
 
     return model;
   };
